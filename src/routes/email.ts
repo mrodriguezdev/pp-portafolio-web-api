@@ -1,5 +1,8 @@
 import { Router } from "express";
+import { sendMail } from "../controllers/email";
 
-const router = Router();
+const routerEmail = Router();
 
-export { router };
+routerEmail.post("/", sendMail);
+
+export { routerEmail };

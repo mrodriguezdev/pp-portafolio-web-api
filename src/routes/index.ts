@@ -1,22 +1,15 @@
-import { Router } from "express";
-import { readdirSync } from "fs";
-
-const PATH_ROUTER = `${__dirname}`;
+import { Request, Response, Router } from "express";
+import { routerEmail } from "./email";
 
 const router = Router();
 
-const cleanFileName = (fileName: string) => {
-    const file = fileName.split('.').shift();
-    return file;
-}
-
-readdirSync(PATH_ROUTER).filter((fileName: string) => {
-    const cleanName = cleanFileName(fileName);
-    if (cleanName !== "index") {
-        import(`./${cleanName}`).then((moduleRouter) => {
-            router.use(`/${cleanName}`, moduleRouter.router);
-        });
-    }
+router.get('/', (req: Request, res: Response) => {
+    res.send({
+        message: 'Hello from Portafolio Web API by mrodriguezdev :)',
+        version: '1.0.0'
+    });
 });
+
+router.use('/email', routerEmail)
 
 export { router };
